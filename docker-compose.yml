@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: bank-postgres
+    environment:
+      POSTGRES_DB: bank_customer_db
+      POSTGRES_USER: dayni
+      POSTGRES_PASSWORD: 1024_Dayni
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/bank-msa-bs-account-customer-api/init-scripts:/docker-entrypoint-initdb.d
+      - ./backend/bank-msa-bs-account-customer-api/init-scripts:/init-scripts
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dayni -d bank_customer_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: bank-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@bank.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  bank-api:
+    build:
+      context: ./backend/bank-msa-bs-account-customer-api
+      dockerfile: Dockerfile
+    container_name: bank-customer-api
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bank_customer_db
+      SPRING_DATASOURCE_USERNAME: dayni
+      SPRING_DATASOURCE_PASSWORD: 1024_Dayni
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  bank-frontend:
+    build:
+      context: ./frontend/bank-spa-ux-account-customer
+      dockerfile: Dockerfile
+    container_name: bank-frontend
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+    depends_on:
+      - bank-api
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

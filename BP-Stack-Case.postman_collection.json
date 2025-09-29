@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "f6300252-0483-4e35-8ee3-f18034d45e91",
+		"name": "BP-Stack-Case",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "48819282",
+		"_collection_link": "https://dayni20-8161964.postman.co/workspace/Dayana_CM's-Workspace~c271d302-d944-454a-87ab-08e67fa24d43/collection/48819282-f6300252-0483-4e35-8ee3-f18034d45e91?action=share&source=collection_link&creator=48819282"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "ACCOUNT - List all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/accounts",
+						"description": "Generated from cURL: curl -X GET http://localhost:8081/clientes"
+					},
+					"response": []
+				},
+				{
+					"name": "ACCOUNT - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"accountNumber\": \"58554\",\r\n        \"accountType\": \"SAVINGS\",\r\n        \"initialBalance\": 1220.0,\r\n        \"status\": true,\r\n        \"customerId\": \"3\",\r\n        \"customerName\": \"Juan Osorio\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/accounts",
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/accounts\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"accountNumber\": \"ACC-999\",\r\n  \"accountType\": \"Savings\",\r\n  \"initialBalance\": 500,\r\n  \"status\": true,\r\n  \"customerId\": \"JL-999\"\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "ACCOUNT - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"accountNumber\": \"123\",\r\n        \"accountType\": \"CHECKING\",\r\n        \"initialBalance\": 100.0,\r\n        \"status\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/accounts/12",
+						"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/accounts/ACC-999\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"accountType\": \"Checking\",\r\n  \"initialBalance\": 1000,\r\n  \"status\": false,\r\n  \"customerId\": \"JL-999\"\r\n}'\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "ACCOUNT - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8081/accounts/1",
+						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/accounts/ACC-999\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "CUSTOMER - Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"AYUDA Castillo\",\r\n    \"address\": \"Quito\",\r\n    \"phone\": \"0981716781\",\r\n    \"password\": \"1234\",\r\n    \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/customers",
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/customers\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"customerId\": \"JL-999\",\r\n  \"name\": \"Jose Lema\",\r\n  \"gender\": \"Male\",\r\n  \"age\": 30,\r\n  \"identification\": \"1010101010\",\r\n  \"address\": \"Otavalo sn y principal\",\r\n  \"phone\": \"098254785\",\r\n  \"password\": \"1234\",\r\n  \"enabled\": true\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "CUSTOMER - List all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8081/customers",
+						"description": "Generated from cURL: curl -X GET http://localhost:8081/clientes"
+					},
+					"response": []
+				},
+				{
+					"name": "CUSTOMER - Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jona Once\",\r\n    \"address\": \"Lata\",\r\n    \"phone\": \"098\",\r\n    \"password\": \"111\",\r\n    \"status\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/customers/2",
+						"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/customers/JL-999\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"name\": \"Jose Lema Updated\",\r\n  \"gender\": \"Male\",\r\n  \"age\": 31,\r\n  \"identification\": \"1010101010\",\r\n  \"address\": \"Amazonas y 10 de Agosto\",\r\n  \"phone\": \"098111222\",\r\n  \"password\": \"9999\",\r\n  \"enabled\": false\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "CUSTOMER - Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8081/customers/1",
+						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/customers/JL-999\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "MOVEMENT- List all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "http://localhost:8081/movements",
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/movements\" -H \"Accept: application/json\"\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "MOVEMENT- CREDIT",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"478758\",\r\n    \"date\": \"2025-09-28\",\r\n    \"transactionType\": \"CREDIT\",\r\n    \"amount\": 120.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/movements",
+						"description": "Generated from cURL: curl -X POST \"http://localhost:8081/movements\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"numeroCuenta\": \"ACC-999\",\r\n  \"fecha\": \"2025-09-27\",\r\n  \"tipoMovimiento\": \"CREDITO\",\r\n  \"valor\": 200\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "MOVEMENT- Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountNumber\": \"478758\",\r\n    \"date\": \"2025-08-28\",\r\n    \"transactionType\": \"CREDIT\",\r\n    \"amount\": 120.0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8081/movements/5",
+						"description": "Generated from cURL: curl -X PUT \"http://localhost:8081/movements/1\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d '{\r\n  \"numeroCuenta\": \"ACC-999\",\r\n  \"fecha\": \"2025-09-28\",\r\n  \"tipoMovimiento\": \"DEBITO\",\r\n  \"valor\": -75,\r\n  \"saldoDisponible\": 425\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "MOVEMENT- Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8081/movements/6",
+						"description": "Generated from cURL: curl -X DELETE \"http://localhost:8081/movements/1\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "REPORT",
+			"item": [
+				{
+					"name": "json",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/reports?customerId=1&startDate=2025-08-28&endDate=2025-09-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"reports"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "startDate",
+									"value": "2025-08-28"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-09-30"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/reports?clienteId=JL-999&fechaInicio=2025-09-01&fechaFin=2025-09-30\" \\\r\n-H \"Accept: application/json\""
+					},
+					"response": []
+				},
+				{
+					"name": "pdf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Visualization Script",
+									"const template = `",
+									"<canvas id=\"myChart\" height=\"150\"></canvas>",
+									"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script>",
+									"<script>",
+									"    var ctx = document.getElementById(\"myChart\").getContext('2d');",
+									"    var myChart = new Chart(ctx, {",
+									"        type: 'bar',",
+									"        data: {",
+									"            labels: [],",
+									"            datasets: [{",
+									"                label: 'Value',",
+									"                data: [],",
+									"                backgroundColor: 'rgba(54, 162, 235, 0.6)',",
+									"                borderColor: 'rgba(54, 162, 235, 1)',",
+									"                borderWidth: 1",
+									"            }]",
+									"        },",
+									"        options: {",
+									"            scales: {",
+									"                yAxes: [{",
+									"                    ticks: {",
+									"                        beginAtZero:true",
+									"                    }",
+									"                }]",
+									"            },",
+									"            responsive: true,",
+									"            maintainAspectRatio: false",
+									"        }",
+									"    });",
+									"",
+									"    pm.getData(function (err, value) {",
+									"        if (err) {",
+									"            console.error(err);",
+									"            return;",
+									"        }",
+									"        var response = value.response;",
+									"        // Assuming response is an array of objects with 'label' and 'value' properties",
+									"        var labels = response.map(item => item.label || '');",
+									"        var data = response.map(item => item.value || 0);",
+									"        myChart.data.labels = labels;",
+									"        myChart.data.datasets[0].data = data;",
+									"        myChart.update();",
+									"    });",
+									"</script>",
+									"`;",
+									"",
+									"function createPayload() {",
+									"    try {",
+									"        return { response: pm.response.json() };",
+									"    } catch (e) {",
+									"        return { response: [] };",
+									"    }",
+									"}",
+									"",
+									"pm.visualizer.set(template, createPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/reports/pdf?customerId=1&startDate=2025-08-28&endDate=2025-09-30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"reports",
+								"pdf"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "startDate",
+									"value": "2025-08-28"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-09-30"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:8081/reports?clienteId=JL-999&fechaInicio=2025-09-01&fechaFin=2025-09-30\" \\\r\n-H \"Accept: application/json\""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
