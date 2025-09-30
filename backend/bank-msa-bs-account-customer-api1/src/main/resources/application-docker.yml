@@ -1,0 +1,30 @@
+# Configuración para Docker
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:5432/bank_customer_db}
+    username: ${SPRING_DATASOURCE_USERNAME:dayni}
+    password: ${SPRING_DATASOURCE_PASSWORD:1024_Dayni}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  
+  sql:
+    init:
+      mode: never
+
+# Configuración de logging para Docker
+logging:
+  level:
+    com.bank.msa.bs.account.customer: INFO
+    org.hibernate.SQL: WARN
+
+# Configuración del servidor
+server:
+  port: 8081

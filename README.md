@@ -1,3 +1,5 @@
+###IMPORTANTE: Se cargo vacio el proyecto por conflicto del .git tanto del back como el front, por ende subi de nuevo pero igual estan los commits realizados
+
 ## BP-STACK-CASE
 
 ### 1. Detener todo

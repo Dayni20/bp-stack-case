@@ -1,0 +1,531 @@
+openapi: 3.0.3
+info:
+  title: Banking Microservice API
+  version: 1.0.0
+  description: REST API to manage customers, accounts, transactions, and account statements (reports).
+
+servers:
+  - url: http://{host}:{port}/api
+    variables:
+      host: { default: localhost }
+      port: { default: '8080' }
+
+tags:
+  - name: Customers
+  - name: Accounts
+  - name: Movements
+  - name: Reports
+
+paths:
+  /customers:
+    get:
+      tags: [Customers]
+      summary: List customers
+      operationId: listCustomers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/CustomerResponse' }
+    post:
+      tags: [Customers]
+      summary: Create a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CustomerRequest' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerResponse' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /customers/{customerId}:
+    put:
+      tags: [Customers]
+      summary: Update a customer (full)
+      operationId: updateCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CustomerRequest' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CustomerResponse' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    delete:
+      tags: [Customers]
+      summary: Delete a customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '204': { description: No Content }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /accounts:
+    get:
+      tags: [Accounts]
+      summary: List accounts
+      operationId: listAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/AccountResponse' }
+    post:
+      tags: [Accounts]
+      summary: Create an account
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AccountCreateRequest' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AccountResponse' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /accounts/{accountId}:
+    put:
+      tags: [Accounts]
+      summary: Update an account (full)
+      operationId: updateAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AccountUpdateRequest' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AccountResponse' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    delete:
+      tags: [Accounts]
+      summary: Delete an account
+      operationId: deleteAccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '204': { description: No Content }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /movements:
+    get:
+      tags: [Movements]
+      summary: List movements
+      operationId: listMovements
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/TransactionResponse' }
+    post:
+      tags: [Movements]
+      summary: Create a movement
+      operationId: createMovement
+      description: >
+        Credits must be positive; debits must be negative.
+        The available balance must be stored on each transaction.
+        If a debit would make the balance negative, return INSUFFICIENT_FUNDS.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TransactionRequest' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TransactionResponse' }
+        '400':
+          description: Business rule violation
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /movements/{movementId}:
+    get:
+      tags: [Movements]
+      summary: Get a movement by ID
+      operationId: getMovementById
+      parameters:
+        - name: movementId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TransactionResponse' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    put:
+      tags: [Movements]
+      summary: Update a movement (full)
+      operationId: updateMovement
+      parameters:
+        - name: movementId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/TransactionRequest' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TransactionResponse' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+    delete:
+      tags: [Movements]
+      summary: Delete a movement
+      operationId: deleteMovement
+      parameters:
+        - name: movementId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '204': { description: No Content }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /reports:
+    get:
+      tags: [Reports]
+      summary: Get account statement for a customer in a date range
+      operationId: getAccountStatement
+      parameters:
+        - name: customerId
+          in: query
+          required: true
+          schema: { type: string }
+        - name: startDate
+          in: query
+          required: true
+          description: Inclusive start date (YYYY-MM-DD)
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          required: true
+          description: Inclusive end date (YYYY-MM-DD)
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: OK - returns JSON summary and a base64-encoded PDF
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AccountStatement' }
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /reports/pdf:
+    get:
+      tags: [Reports]
+      summary: Download account statement PDF
+      operationId: downloadAccountStatementPdf
+      parameters:
+        - name: customerId
+          in: query
+          required: true
+          schema: { type: string }
+        - name: startDate
+          in: query
+          required: true
+          description: Inclusive start date (YYYY-MM-DD)
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          required: true
+          description: Inclusive end date (YYYY-MM-DD)
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: PDF file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        name:            { type: string }
+        address:         { type: string }
+        phone:           { type: string }
+      required: [name, address, phone]
+
+    CustomerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del cliente
+          minLength: 4
+          maxLength: 20
+          pattern: ^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$
+        address:
+          type: string
+          description: Dirección del cliente
+          minLength: 3
+          maxLength: 20
+        phone:
+          type: string
+          description: Teléfono del cliente
+          minLength: 1
+          maxLength: 20
+          pattern: ^[0-9]+$
+        password:
+          type: string
+          description: Contraseña del cliente
+          minLength: 4
+          maxLength: 10
+        status:
+          type: boolean
+          description: Estado del cliente (activo o inactivo)
+      required:
+        - name
+        - address
+        - phone
+        - password
+        - status
+
+    CustomerResponse:
+      allOf:
+        - $ref: '#/components/schemas/Person'
+        - type: object
+          properties:
+            customerId: { type: integer }
+            password:   { type: string }
+            status:    { type: boolean }
+          required: [customerId,password, status]
+
+    AccountBaseRequest:
+      type: object
+      properties:
+        accountNumber:   { type: string }
+        accountType:
+          type: string
+          enum: [SAVINGS, CHECKING]
+          description: Tipo de cuenta (Ahorros o Corriente)
+        initialBalance:  { type: number, format: double }
+        status:
+          type: boolean
+          description: Estado de la cuenta (true o false)
+      required: [accountNumber, accountType, initialBalance, status]
+
+    AccountCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/AccountBaseRequest'
+        - type: object
+          properties:
+            customerId: { type: string }
+          required: [customerId]
+
+    AccountUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/AccountBaseRequest'
+
+    AccountResponse:
+      type: object
+      properties:
+        accountId:       { type: integer }
+        accountNumber:   { type: string }
+        accountType:     { type: string }
+        initialBalance:  { type: number, format: double }
+        status:         { type: boolean }
+        customerId:      { type: string }
+        customerName:    { type: string }
+      required: [accountId, accountNumber, accountType, initialBalance, status, customerId, customerName]
+
+    TransactionRequest:
+      type: object
+      properties:
+        accountNumber:    { type: string }
+        date:             { type: string, format: date }
+        transactionType:
+          type: string
+          enum: [CREDIT, DEBIT]
+          description: Tipo de movimiento (CREDIT para depósitos, DEBIT para retiros)
+        amount:           { type: number, format: double, description: 'Valor positivo para movimientos' }
+      required: [accountNumber, date, transactionType, amount]
+
+    TransactionResponse:
+      type: object
+      properties:
+        movementId:       { type: integer }
+        accountNumber:    { type: string }
+        date:             { type: string, format: date }
+        transactionType:  { type: string, enum: [CREDIT, DEBIT] }
+        amount:           { type: number, format: double }
+        availableBalance: { type: number, format: double }
+      required: [movementId, accountNumber, date, transactionType, amount, availableBalance]
+
+    AccountStatement:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            customerId: { type: string }
+            name:       { type: string }
+        dateRange:
+          type: object
+          properties:
+            start: { type: string, format: date }
+            end:   { type: string, format: date }
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              accountNumber:   { type: string }
+              accountType:     { type: string }
+              initialBalance:  { type: number, format: double }
+              transactions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:             { type: string, format: date }
+                    transactionType:  { type: string, enum: [CREDIT, DEBIT] }
+                    amount:           { type: number, format: double }
+                    availableBalance: { type: number, format: double }
+              totals:
+                type: object
+                properties:
+                  totalDebits:  { type: number, format: double }
+                  totalCredits: { type: number, format: double }
+        pdfBase64:
+          type: string
+          description: Base64-encoded PDF of the statement
+      required: [customer, dateRange, accounts, pdfBase64]
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: [VALIDATION_ERROR, NOT_FOUND, INSUFFICIENT_FUNDS]
+        message:
+          type: string
+          description: Human-readable message (you can localize it, e.g., "Saldo no disponible")
+      required: [code, message]
